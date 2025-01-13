@@ -1,5 +1,5 @@
 from prettytable import PrettyTable
-import pyfiglet
+import pyfiglet  # Font type
 
 # Menus category
 menus = {
@@ -35,7 +35,7 @@ def display_menu(menu):
     print(table)
 
 # Find an item by serial number
-def find_item_by_serial(serial):
+def find_item_by_serial(serial):   
     for category, items in menus.items():
         for item in items:
             if item["Serial number"] == serial:
@@ -46,7 +46,7 @@ def find_item_by_serial(serial):
 def recommend_items(category, current_item):
     recommendations = [
         item for item in menus[category] if item["name"] != current_item["name"] and int(item["stock"]) > 0
-    ]
+    ]                           # This ! mark ensures that same iteam is not recommended again.
     if recommendations:
         print("\nHere are some other items from the same category:")
         display_menu(recommendations)
@@ -62,7 +62,7 @@ def process_payment(item):
                 print("Insufficient amount. Please pay at least the item price.")
             else:
                 change = amount_paid - item["price"]
-                print(f"Payment successful! Your change is ${change:.2f}.")
+                print(f"Payment successful! Your change is ${change:.2f}.") # Change is rounded up to 2 decimal place.
                 item["stock"] -= 1
                 return
         except ValueError:
@@ -80,15 +80,15 @@ def vending_machine():
             display_menu(menu)
 
         # Ask user for item selection
-        serial = input("\nEnter the Serial Number of the item you want to purchase: ").strip()
+        serial = input("\nEnter the Serial Number of the item you want to purchase: ").strip() # To remove any extra spaces
         item = find_item_by_serial(serial)
 
         if not item:
             print("Invalid Serial Number. Please try again.")
             continue
 
-        if int(item["stock"]) <= 0:
-            print(f"Sorry, {item['name']} is out of stock.")
+        if int(item["stock"]) <= 0:      
+            print(f"Sorry, {item['name']} is out of stock.")  
             continue
 
         print(f"\nYou selected: {item['name']} - ${item['price']}")
@@ -103,7 +103,7 @@ def vending_machine():
                 break
             
         # Ask if the user wants to make another purchase
-        another_purchase = input("\nWould you like to purchase another item? (yes/no): ").strip().lower()
+        another_purchase = input("\nWould you like to purchase another item? (yes/no): ").strip().lower() # to remove spaces and any capitalization.
 
         if another_purchase == "yes":
             continue  # Restart the loop for another purchase
