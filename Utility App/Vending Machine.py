@@ -34,7 +34,7 @@ def display_menu(menu):
         table.add_row([item["Serial number"], item["name"], item["price"], item["stock"]])
     print(table)
 
-# Find an item by serial number
+# Find an item by serial number using functions
 def find_item_by_serial(serial):   
     for category, items in menus.items():
         for item in items:
@@ -48,7 +48,7 @@ def recommend_items(category, current_item):
         item for item in menus[category] if item["name"] != current_item["name"] and int(item["stock"]) > 0
     ]                           # This ! mark ensures that same iteam is not recommended again.
     if recommendations:
-        print("\nHere are some other items from the same category:")
+        print("\nWould you like to add something else:")
         display_menu(recommendations)
     else:
         print("\nNo other items to recommend in this category.")
@@ -63,14 +63,14 @@ def process_payment(item):
             else:
                 change = amount_paid - item["price"]
                 print(f"Payment successful! Your change is ${change:.2f}.") # Change is rounded up to 2 decimal place.
-                item["stock"] -= 1
+                item["stock"] -= 1     
                 return
         except ValueError:
             print("Invalid input. Please enter a valid amount.")
 
 # Vending machine function
 def vending_machine():
-    welcome_msg = pyfiglet.figlet_format("WELCOME! to the Vending Machine")
+    welcome_msg = pyfiglet.figlet_format("WELCOME! to the Vending Machine") # Display a welcome messaage using aesthetic font.
     print(welcome_msg)
     
     while True:  # Allow multiple purchases
@@ -80,7 +80,7 @@ def vending_machine():
             display_menu(menu)
 
         # Ask user for item selection
-        serial = input("\nEnter the Serial Number of the item you want to purchase: ").strip() # To remove any extra spaces
+        serial = input("\nEnter the Serial Number of the item you want to purchase: ").strip() # To remove any extra spaces.
         item = find_item_by_serial(serial)
 
         if not item:
@@ -96,15 +96,15 @@ def vending_machine():
         # Process payment
         process_payment(item)
 
-        # Recommend other items in the same category
+        # Recommend other items in same category
         for category, items in menus.items():
             if item in items:
                 recommend_items(category, item)
                 break
             
         # Ask if the user wants to make another purchase
-        another_purchase = input("\nWould you like to purchase another item? (yes/no): ").strip().lower() # to remove spaces and any capitalization.
-
+        another_purchase = input("\nWould you like to purchase another item? (yes/no): ").strip().lower() 
+                                                                                       # to remove spaces and any capitalization.
         if another_purchase == "yes":
             continue  # Restart the loop for another purchase
         else:
@@ -113,3 +113,4 @@ def vending_machine():
 
 if __name__ == "__main__":
     vending_machine()
+    
